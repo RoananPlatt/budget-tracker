@@ -84,7 +84,7 @@ function populateChart() {
             fill: true,
 
             backgroundColor: "#6666ff",
-            
+
             data
         }]
     }
@@ -93,31 +93,30 @@ function populateChart() {
 
 function sendTransaction(isAdding) {
   let nameEl = document.querySelector("#t-name");
+
   let amountEl = document.querySelector("#t-amount");
+
   let errorEl = document.querySelector(".form .error");
 
-  // validate form
   if (nameEl.value === "" || amountEl.value === "") {
     errorEl.textContent = "Missing Information";
     return;
   }
+
   else {
     errorEl.textContent = "";
   }
 
-  // create record
   let transaction = {
     name: nameEl.value,
     value: amountEl.value,
     date: new Date().toISOString()
   };
 
-  // if subtracting funds, convert amount to negative number
   if (!isAdding) {
     transaction.value *= -1;
   }
 
-  // add to beginning of current array of data
   transactions.unshift(transaction);
 
   // re-run logic to populate ui with new record
