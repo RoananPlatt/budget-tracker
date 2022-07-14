@@ -108,8 +108,11 @@ function sendTransaction(isAdding) {
   }
 
   let transaction = {
+
     name: nameEl.value,
+
     value: amountEl.value,
+
     date: new Date().toISOString()
   };
 
@@ -119,38 +122,40 @@ function sendTransaction(isAdding) {
 
   transactions.unshift(transaction);
 
-  // re-run logic to populate ui with new record
   populateChart();
+
   populateTable();
+
   populateTotal();
   
-  // also send to server
   fetch("/api/transaction", {
     method: "POST",
+
     body: JSON.stringify(transaction),
+
     headers: {
       Accept: "application/json, text/plain, */*",
       "Content-Type": "application/json"
     }
   })
+
   .then(response => {    
     return response.json();
   })
+
   .then(data => {
     if (data.errors) {
       errorEl.textContent = "Missing Information";
     }
     else {
-      // clear form
       nameEl.value = "";
       amountEl.value = "";
     }
   })
+
   .catch(err => {
-    // fetch failed, so save in indexed db
     saveRecord(transaction);
 
-    // clear form
     nameEl.value = "";
     amountEl.value = "";
   });
