@@ -33,7 +33,7 @@ function populateTable() {
 
   transactions.forEach(transaction => {
     let tr = document.createElement("tr");
-    
+
     tr.innerHTML = `
       <td>${transaction.name}</td>
       <td>${transaction.value}</td>
@@ -44,24 +44,26 @@ function populateTable() {
 }
 
 function populateChart() {
-  // copy array and reverse it
   let reversed = transactions.slice().reverse();
+
   let sum = 0;
 
-  // create date labels for chart
   let labels = reversed.map(t => {
+
     let date = new Date(t.date);
+
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   });
 
-  // create incremental values for chart
   let data = reversed.map(t => {
+
     sum += parseInt(t.value);
+
     return sum;
   });
 
-  // remove old chart if it exists
   if (myChart) {
+    
     myChart.destroy();
   }
 
